@@ -43,25 +43,12 @@ class DBQuery(object):
         t_width = Inches(4)
         t_height = Inches(0.7440945)
         prs = Presentation(self.presentation_name)
-        # slide = prs.slides.add_slide(prs.slide_layouts[5])
         slide = prs.slides[0]
         # Text
         txBox = slide.shapes.add_textbox(t_left, t_top, t_width, t_height)
         tf = txBox.text_frame
         tf.clear()
-        # p = tf.add_paragraph()
-        # p.level = 0
-        # p.text = severity
-        # p.font.size = Pt(11)
-        # p = tf.add_paragraph()
-        # p.level = 0
-        # p.text = "\u2022  " + severity + "S are based on the following error:"
-        # p.font.size = Pt(9)
-        # p = tf.add_paragraph()
-        # p.level = 0
-        # p.text = query_result_df[0][0] + ": " + query_result_df[1][0]
-        # p.font.size = Pt(9)
-        # prs.save(name)
+
 
         p = tf.paragraphs[0]
         run = p.add_run()
@@ -119,13 +106,6 @@ class DBQuery(object):
         conn.close()
 
         query_result_df = pd.DataFrame(query_result)
-        # query_result_df = query_result_df.transpose()
-        # fig = go.Figure(data=[go.Table(header=dict(values=['A Scores', 'B Scores', 'C', 'D', 'E', 'F']),
-        #                                cells=dict(values=query_result_df))])
-        #
-        # print(query_result_df)
-        # for index, row in query_result_df.iterrows():
-        #     print(row[0], row[1])
 
         gauges = Create_Gauge(500)
 
@@ -133,13 +113,11 @@ class DBQuery(object):
             gauges.new_gauge(name=row[0], stat=row[1])
 
         gauges.create_full_image(name='ibs_kpi_020')
-        # fig.write_image('Images/ibs_kpi_020.png')
+
 
         # Put it in the presentation
         prs = Presentation(self.presentation_name)
-        # slide = prs.slides.add_slide(prs.slide_layouts[5])
         slide = prs.slides[7]
-        # pic = slide.shapes.add_picture('Images/ibs_kpi_020.jpg', 100, 100, 100, 100)
         shapes = prs.slides[0].shapes
         number_of_guages = gauges.count
         if gauges.count >= 10:
@@ -159,7 +137,6 @@ class DBQuery(object):
         cursor = conn.cursor()
         count = 0
         for index, row in query_result_df.iterrows():
-            #if row[1] > 500:
             top_margin = Inches(2.2 + (0.9 * count))
             try:
                 query_string = """
@@ -229,11 +206,6 @@ class DBQuery(object):
         conn.close()
 
         query_result_df = pd.DataFrame(query_result)
-        # query_result_df = query_result_df.transpose()
-
-        # fig = go.Figure(data=[go.Table(header=dict(values=['A Scores', 'B Scores', 'C', 'D', 'E', 'F']),
-        #                                cells=dict(values=query_result_df))])
-        # fig.show()
 
         gauges = Create_Gauge(5000)
         # todo:need to sort the dataframe
@@ -242,13 +214,10 @@ class DBQuery(object):
             gauges.new_gauge(name=row[0], stat=row[1])
 
         gauges.create_full_image(name='ibs_kpi_020')
-        # fig.write_image('Images/ibs_kpi_020.png')
 
         # Put it in the presentation
         prs = Presentation(self.presentation_name)
-        # slide = prs.slides.add_slide(prs.slide_layouts[5])
         slide = prs.slides[6]
-        # pic = slide.shapes.add_picture('Images/ibs_kpi_020.jpg', 100, 100, 100, 100)
         shapes = prs.slides[0].shapes
         number_of_guages = gauges.count
 
@@ -266,7 +235,6 @@ class DBQuery(object):
         count = 0
         for index, row in query_result_df.iterrows():
             # @todo: Create evaluation function to decide when i should put which rows
-            #if row[1] > 50:
             top_margin = Inches(2.2 + (0.9 * count))
             try:
                 query_string = """
@@ -360,12 +328,8 @@ class DBQuery(object):
         query_result_df.columns =['Service Name', 'Failed Component Service', 'Error', 'Failure Count', 'Affected Subscribers', 'Comments']
         fig = go.Figure(data=[go.Table(header=dict(values=['A Scores', 'B Scores', 'C', 'D', 'E', 'F']),
                                        cells=dict(values=query_result_df2))])
-        # fig.show()
-        # fig.write_image('Images/ibs_ms_001.svg', width=2000, height=2000,scale=0)
-        # query_result_df['Comments'] = ""
-        # Put it in the presentation
+
         prs = Presentation(self.presentation_name)
-        # slide = prs.slides.add_slide(prs.slide_layouts[5])
         slide = prs.slides[5]
         top = Inches(2.5)
         left = Inches(0.75)
@@ -396,8 +360,6 @@ class DBQuery(object):
         table.columns[5].width = Inches(1.5)
 
         prs.save(self.presentation_name)
-
-        # print('hi')
 
 
     def ibs_ms_003(self):
@@ -433,42 +395,7 @@ class DBQuery(object):
         conn.close()
 
         query_result_df = pd.DataFrame(query_result)
-        # query_result_df = query_result_df.transpose()
         services = query_result_df.iloc[:, 1]
-
-        # fig = go.Figure()
-        # fig.add_trace(go.Bar(
-        #     y=services,
-        #     x=query_result_df.iloc[:, 2],
-        #     name='Unique MSISDNs Affected (2 Days Ago)',
-        #     orientation='h',
-        #     width=0.1,
-        #     marker_color='rgba(3, 36, 252)'
-        # ))
-        # fig.add_trace(go.Bar(
-        #     y=services,
-        #     x=query_result_df.iloc[:, 3],
-        #     name='Unique MSISDNs Affected (Yesterday)',
-        #     orientation='h',
-        #     width=0.1,
-        #     marker_color='rgba(184, 0, 0)'
-        # ))
-        # fig.add_trace(go.Bar(
-        #     y=services,
-        #     x=query_result_df.iloc[:, 4],
-        #     name='Unique MSISDNs Affected (Today)',
-        #     orientation='h',
-        #     width=0.1,
-        #     marker_color='rgba(242, 186, 0)'
-        # ))
-        #
-        # fig.update_layout(barmode='group',
-        #                   bargap=0.15,  # gap between bars of adjacent location coordinates.
-        #                   bargroupgap=0.1  # gap between bars of the same location coordinate.
-        #                   )
-        # # fig.show()
-        # # @todo: use matplotlib grouped bar chart
-        # fig.write_image('Images/ibs_ms_003.jpg', height=700, width=1000, scale=0)
 
         services = query_result_df.iloc[:, 1]
         x = query_result_df.iloc[:, 2]
@@ -484,7 +411,6 @@ class DBQuery(object):
         fig.savefig('Images/ibs_ms_003.png', transparent=True)
 
         prs = Presentation(self.presentation_name)
-        # slide = prs.slides.add_slide(prs.slide_layouts[5])
         slide = prs.slides[3]
         top = Inches(2.0)
         left = Inches(0.25)
@@ -551,19 +477,6 @@ def populate_list(slide, query_result_df, prs, name, severity, top):
     txBox = slide.shapes.add_textbox(t_left,t_top, t_width, t_height)
     tf = txBox.text_frame
     tf.clear()
-    # p = tf.add_paragraph()
-    # p.level = 0
-    # p.text = severity
-    # p.font.size = Pt(11)
-    # p = tf.add_paragraph()
-    # p.level = 0
-    # p.text = "\u2022  " + severity + "S are based on the following error:"
-    # p.font.size = Pt(9)
-    # p = tf.add_paragraph()
-    # p.level = 0
-    # p.text = query_result_df[0][0] + ": " + query_result_df[1][0]
-    # p.font.size = Pt(9)
-    # prs.save(name)
 
     p = tf.paragraphs[0]
     run = p.add_run()
