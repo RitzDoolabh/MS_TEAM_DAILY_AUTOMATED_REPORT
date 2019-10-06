@@ -14,4 +14,3 @@ print(report)
 
 # @todo: Mapping of IBF errors
 # @todo: Email content needs to be sent
-# @todo: Clean up code
