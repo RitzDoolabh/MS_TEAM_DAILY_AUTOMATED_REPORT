@@ -95,7 +95,7 @@ class Create_Gauge(object):
             margin=dict(l=30, r=30, t=30, b=0),
         )
 
-        fig.write_image(self.path + 'Images/Images/gauge' + str(self.count) +'.jpg', width=500, height=500,scale=0)
+        fig.write_image(self.path + 'Images/gauge' + str(self.count) +'.jpg', width=500, height=500,scale=0)
         self.count = self.count+1
 
     def create_full_image(self, name):
@@ -152,104 +152,104 @@ class Create_Gauge(object):
         z = 0
         row_array = list()
         while z < y-1:
-            row_array.append(cv2.imread(self.path + 'Images/Images/row' + str(z+1) + '.jpg'))
+            row_array.append(cv2.imread(self.path + 'Images/row' + str(z+1) + '.jpg'))
             z = z + 1
         final = np.concatenate(row_array, axis=0)
-        cv2.imwrite(self.path + 'Images/Images/' + str(name) + '.jpg', final)
+        cv2.imwrite(self.path + 'Images/' + str(name) + '.jpg', final)
         self.rows = z
 
-        # filename = 'Images/' + str(name) + '.jpg'
+        # filename = '' + str(name) + '.jpg'
         # W = 500
         # oriimg = cv2.imread(filename)
         # height, width, depth = oriimg.shape
         # imgScale = W / width
         # newX, newY = oriimg.shape[1] * imgScale, oriimg.shape[0] * imgScale
         # newimg = cv2.resize(oriimg, (int(newX), int(newY)), interpolation=cv2.INTER_AREA)
-        # cv2.imwrite(self.path + 'Images/Images/' + str(name) + '.jpg', newimg)
+        # cv2.imwrite(self.path + 'Images/' + str(name) + '.jpg', newimg)
         #
         # basewidth = 375
-        # img = Image.open(self.path + 'Images/Images/' + str(name) + '.jpg')
+        # img = Image.open(self.path + 'Images/' + str(name) + '.jpg')
         # wpercent = (basewidth / float(img.size[0]))
         # hsize = int((float(img.size[1]) * float(wpercent)))
         # img = img.resize((basewidth, hsize), PIL.Image.ANTIALIAS)
-        # img.save(self.path + 'Images/Images/' + str(name) + '.jpg')
+        # img.save(self.path + 'Images/' + str(name) + '.jpg')
 
     def create_gauge_rows(self, num_gauges, row_num, gauges_per_row):
 
-        if gauges_per_row == 3 and os.path.isfile(self.path + 'Images/Images/gauge' + str(self.count - 3) + '.jpg'):
-            img1 = cv2.imread(self.path + 'Images/Images/gauge' + str(num_gauges - 3) + '.jpg')
+        if gauges_per_row == 3 and os.path.isfile(self.path + 'Images/gauge' + str(self.count - 3) + '.jpg'):
+            img1 = cv2.imread(self.path + 'Images/gauge' + str(num_gauges - 3) + '.jpg')
         # else:
         #     img1 = np.zeros([500, 500, 3], dtype=np.uint8)
         #     img1.fill(255)
 
         if (gauges_per_row == 3 or gauges_per_row == 2):
             if gauges_per_row == 2:
-                img1 = cv2.imread(self.path + 'Images/Images/gauge' + str(self.count - 2) + '.jpg')
+                img1 = cv2.imread(self.path + 'Images/gauge' + str(self.count - 2) + '.jpg')
             else:
-                img2 = cv2.imread(self.path + 'Images/Images/gauge' + str(num_gauges - 2) + '.jpg')
+                img2 = cv2.imread(self.path + 'Images/gauge' + str(num_gauges - 2) + '.jpg')
         # else:
         #     img2 = np.zeros([500, 500, 3], dtype=np.uint8)
         #     img2.fill(255)
 
         if (gauges_per_row == 3 or gauges_per_row == 2 or gauges_per_row == 1):
             if gauges_per_row == 2:
-                img2 = cv2.imread(self.path + 'Images/Images/gauge' + str(self.count - 1) + '.jpg')
+                img2 = cv2.imread(self.path + 'Images/gauge' + str(self.count - 1) + '.jpg')
                 img3 = np.zeros([500, 500, 3], dtype=np.uint8)
                 img3.fill(255)
             elif gauges_per_row == 1:
-                img1 = cv2.imread(self.path + 'Images/Images/gauge' + str(self.count - 1) + '.jpg')
+                img1 = cv2.imread(self.path + 'Images/gauge' + str(self.count - 1) + '.jpg')
                 img2 = np.zeros([500, 500, 3], dtype=np.uint8)
                 img2.fill(255)
                 img3 = np.zeros([500, 500, 3], dtype=np.uint8)
                 img3.fill(255)
             else:
-                img3 = cv2.imread(self.path + 'Images/Images/gauge' + str(num_gauges - 1) + '.jpg')
+                img3 = cv2.imread(self.path + 'Images/gauge' + str(num_gauges - 1) + '.jpg')
         else:
             img3 = np.zeros([500, 500, 3], dtype=np.uint8)
             img3.fill(255)
 
         vis = np.concatenate((img1, img2, img3), axis=1)
-        cv2.imwrite(self.path + 'Images/Images/row' + str(row_num) + '.jpg', vis)
+        cv2.imwrite(self.path + 'Images/row' + str(row_num) + '.jpg', vis)
 
     def create_four_gauge_rows(self, num_gauges, row_num, gauges_per_row):
 
-        if gauges_per_row == 4 and os.path.isfile(self.path + 'Images/Images/gauge' + str(self.count - 4) + '.jpg'):
-            img1 = cv2.imread(self.path + 'Images/Images/gauge' + str(num_gauges - 4) + '.jpg')
+        if gauges_per_row == 4 and os.path.isfile(self.path + 'Images/gauge' + str(self.count - 4) + '.jpg'):
+            img1 = cv2.imread(self.path + 'Images/gauge' + str(num_gauges - 4) + '.jpg')
         else:
             img1 = np.zeros([500, 500, 3], dtype=np.uint8)
             img1.fill(255)
 
-        if (gauges_per_row == 4 or gauges_per_row == 3)and os.path.isfile(self.path + 'Images/Images/gauge' + str(self.count - 3) + '.jpg'):
+        if (gauges_per_row == 4 or gauges_per_row == 3)and os.path.isfile(self.path + 'Images/gauge' + str(self.count - 3) + '.jpg'):
             if gauges_per_row == 3:
-                img1 = cv2.imread(self.path + 'Images/Images/gauge' + str(self.count - 3) + '.jpg')
+                img1 = cv2.imread(self.path + 'Images/gauge' + str(self.count - 3) + '.jpg')
             else:
-                img2 = cv2.imread(self.path + 'Images/Images/gauge' + str(num_gauges - 3) + '.jpg')
+                img2 = cv2.imread(self.path + 'Images/gauge' + str(num_gauges - 3) + '.jpg')
         # else:
         #     img2 = np.zeros([500, 500, 3], dtype=np.uint8)
         #     img2.fill(255)
 
         if (gauges_per_row == 4 or gauges_per_row == 3 or gauges_per_row == 2) and os.path.isfile(
-                'Images/gauge' + str(num_gauges - 2) + '.jpg'):
+                'gauge' + str(num_gauges - 2) + '.jpg'):
             if gauges_per_row == 2:
-                img1 = cv2.imread(self.path + 'Images/Images/gauge' + str(self.count - 2) + '.jpg')
+                img1 = cv2.imread(self.path + 'Images/gauge' + str(self.count - 2) + '.jpg')
             elif gauges_per_row == 3:
-                img2 = cv2.imread(self.path + 'Images/Images/gauge' + str(self.count - 2) + '.jpg')
+                img2 = cv2.imread(self.path + 'Images/gauge' + str(self.count - 2) + '.jpg')
             else:
-                img3 = cv2.imread(self.path + 'Images/Images/gauge' + str(num_gauges - 2) + '.jpg')
+                img3 = cv2.imread(self.path + 'Images/gauge' + str(num_gauges - 2) + '.jpg')
         # else:
         #     img2 = np.zeros([500, 500, 3], dtype=np.uint8)
         #     img2.fill(255)
 
         if (gauges_per_row == 4 or gauges_per_row == 3 or gauges_per_row == 2 or gauges_per_row == 1) and os.path.isfile(
-                'Images/gauge' + str(num_gauges - 1) + '.jpg'):
+                'gauge' + str(num_gauges - 1) + '.jpg'):
             if gauges_per_row == 2:
-                img2 = cv2.imread(self.path + 'Images/Images/gauge' + str(self.count - 1) + '.jpg')
+                img2 = cv2.imread(self.path + 'Images/gauge' + str(self.count - 1) + '.jpg')
                 img3 = np.zeros([500, 500, 3], dtype=np.uint8)
                 img3.fill(255)
                 img4 = np.zeros([500, 500, 3], dtype=np.uint8)
                 img4.fill(255)
             elif gauges_per_row == 1:
-                img1 = cv2.imread(self.path + 'Images/Images/gauge' + str(self.count - 1) + '.jpg')
+                img1 = cv2.imread(self.path + 'Images/gauge' + str(self.count - 1) + '.jpg')
                 img2 = np.zeros([500, 500, 3], dtype=np.uint8)
                 img2.fill(255)
                 img3 = np.zeros([500, 500, 3], dtype=np.uint8)
@@ -257,14 +257,14 @@ class Create_Gauge(object):
                 img4 = np.zeros([500, 500, 3], dtype=np.uint8)
                 img4.fill(255)
             elif gauges_per_row == 3:
-                img3 = cv2.imread(self.path + 'Images/Images/gauge' + str(self.count - 1) + '.jpg')
+                img3 = cv2.imread(self.path + 'Images/gauge' + str(self.count - 1) + '.jpg')
                 img4 = np.zeros([500, 500, 3], dtype=np.uint8)
                 img4.fill(255)
             else:
-                img4 = cv2.imread(self.path + 'Images/Images/gauge' + str(num_gauges - 1) + '.jpg')
+                img4 = cv2.imread(self.path + 'Images/gauge' + str(num_gauges - 1) + '.jpg')
         # else:
         #     img4 = np.zeros([500, 500, 3], dtype=np.uint8)
         #     img4.fill(255)
 
         vis = np.concatenate((img1, img2, img3, img4), axis=1)
-        cv2.imwrite(self.path + 'Images/Images/row' + str(row_num) + '.jpg', vis)
+        cv2.imwrite(self.path + 'Images/row' + str(row_num) + '.jpg', vis)
