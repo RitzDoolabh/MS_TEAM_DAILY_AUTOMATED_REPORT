@@ -75,9 +75,11 @@ with open(report.presentation_name, "rb") as attachment:
 encoders.encode_base64(part)
 
 # Add header as key/value pair to attachment part
+now = datetime.now()
+dt_string = now.strftime("%d/%m/%Y_%H:%M")
 part.add_header(
  "Content-Disposition",
- f"attachment; filename= {'IBF_AUTOMATED_REPORT_' + str(datetime.now())}",
+ f"attachment; filename= {'IBF_AUTOMATED_REPORT_' + str(dt_string) + '.pptx'}",
 )
 
 # Add attachment to message and convert message to string
