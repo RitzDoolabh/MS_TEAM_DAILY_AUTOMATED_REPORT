@@ -363,8 +363,8 @@ class DBQuery(object):
         now = datetime.now()
 
         dt_string = now.strftime("%d/%m/%Y %H:%M")
-        text = 'Period: ' + str(dt_string) + ' - ' + str((now - timedelta(days=dateDiff)).strftime("%%d/%m/%Y %H:%M"))
-        txBox = slide.shapes.add_textbox(Inches(0.9), Inches(1.0), Inches(1.0), Inches(1.0))
+        text = 'Period: ' + str(dt_string) + ' - ' + str((now - timedelta(days=dateDiff)).strftime("%d/%m/%Y %H:%M"))
+        txBox = slide.shapes.add_textbox(Inches(0.98), Inches(1.0), Inches(1.0), Inches(1.0))
         tf = txBox.text_frame
         tf.clear()
 

@@ -1,0 +1,377 @@
+ERROR| DESCRIPTION
+200|No Error
+201|Unsupported operation, for instance attempting to update the expiry date of DA102, which is a non-expiry account
+202|Not supported on the IBS Database
+203|Invalid input values
+300|SDP Migration Batch does not exist
+301|The SDP Migration Batch is in an invalid state
+302|The subscriber has been locked temporarily as result of a pending SDP migration
+303|The migration batch configuration does not return any MSISDN values
+304|A pending schedule exists for the SDP
+310|SUL update limit reached (x times in 24 hours)
+311|SPUL update limit reached (x times in 24 hours)
+312|New SUL greater than SPUL
+313|New SUL equal to current SUL
+314|New SPUL equal to current SPUL
+315|Channel not allowed to set SPUL (only PROVIDENT and CC allowed)
+316|Notification update limit reached (x times in 24 hours)
+317|Usage limit account not defined for subscriber (Account not defined on the subscriber's profile on the SDP)
+318|Barred from doing Usage Limit changes via Self-Service
+320|Registered to Siebel and tries to register to smile
+320|Subscriber is registered to Siebel loyalty and tries to register on Smile loyalty.
+321|Registered to smile and tries to re-register to smile
+322|MSISDN belongs to one of the following price plans 50, 97, 98, 99
+323|Registered to Siebel and tries to de-register through USSD
+324|Not registered to smile and tries to de-register through USSD
+325|Invalid ID number format <PPMED error>
+326|ID number cannot be associated with more than 5 MSISDNs <PPMED error>
+327|Wrong de-registration pin number <PPMED error>
+328|Registered to Siebel and tries to re-register to Siebel
+329|Subscriber not registered to loyalty and tries to redeem a loyalty product. This error code is generated due to a check on SLMA or an error code “3” from PPMED or “MTN_ERR_001” from Siebel.
+330|Error redeeming loyalty product. This error code is returned when PPMED has experienced a temporary system error (error code "2" was received form PPMED)
+331|Error redeeming loyalty product. This error code is returned when the subscriber is not registered for SMILE (error code "3" was received form PPMED)
+332|Error redeeming loyalty product. This error code is returned when the SMILE subscriber not registered to redeem point (error code "4" was received form PPMED)
+333|Error redeeming loyalty product. This error code is returned when the SMILE subscriber has insufficient SMILE points (error code "6" was received form PPMED)
+334|Error redeeming loyalty product. PPMED Points Retrieval Timeout
+336|Error redeeming loyalty product. Recipient MSISDN is not in the same Loyalty Membership as Requester MSISDN
+337|Transfer failed due to technical error.
+ | 
+350|There are no benefits associated with the promotion awarded, so no promotional service option can be provisioned on the subscriber account. The configuration of the promotion should be checked for correctness.
+400|SDP Parameter fault
+404|Invalid MSISDN (MSISDN not installed)
+405|Contract subscriber; Master MSISDN does not exist
+407|Subordinate exists, when trying to disconnect a master MSISDN
+410|Bundle not defined for the subscriber type
+419|MSISDN not within an SDP number range
+420|Subscriber is already an Active Prepaid Subscriber
+421|Subscriber is already an Active Contract Subscriber
+422|Subscriber is already an Loaded Prepaid Subscriber
+423|Subscriber is already an Active Hybrid Subscriber
+424|Subscriber is already an Active USAL Subscriber
+425|Subscriber is already an Active Converged Subscriber
+426|Sim pack provider id supplied does not exist on IBS. Subscriber will be provisioned on the default SPP_Id of 2999.
+427|Sim Pack Provider ID too long
+475|Activation already in progress
+430|Incorrect Subscriber Type provided
+431|Invalid/Missing Action in Request
+432|k-Indicator Missing in Request
+433|FaF Number Already Exists
+434|Number being added not an active MTN Subscriber
+435|FAF List maintenance operation failed
+436|Limit for ADD reached
+437|Limit for Update reached for the day
+438|Number supplied has invalid format
+439|List Maintenance Failed (if SDP fails or any other process in the flow – no retries will happen)
+440|A_MSISDN and B_MSISDN are the same
+441|Priceplan incompatible with FaF Bundle
+442|Postpaid Subscriber has Pending Retry Request
+450|Bill run date not set on a subscriber type migration
+451|Bill run date set failed
+460|Service provider does not exist
+461|Service provider cannot be removed as it still have MSISDNs assigned to it
+462|Service Provider Group does not exist
+465|Service Provider not authorised
+470|On a Me4U recharge – the B_MSISDN is not a valid MSISDN
+471|Active MVNO subscriber
+472|Active ItsOn subscriber
+473|Subscriber is already an Active EBU Subscriber
+480|Subscriber attribute not defined.
+490|Duplicate Xtra time loan id
+500|Request could not be processed. Internal server error.
+501|Transformation failure
+502|SOA could not process PII consent request
+503|Reprovision failure; initial and current handset IMEI differ (recharge returning 503 signals 'Service unavailble', see below)
+504|SDP Gateway failure
+505|SOA could not process subscriber loan repayment notification request
+506|SOA could not process subscriber disconnection notification request
+551|Air node could not perform necessary tasks to swap MSISDN
+552|EDR Could not be generated for MSISDN swap
+553|PPMED could not perform necessary tasks to swap MSISDN
+554|PPMS could not perform necessary tasks to swap MSISDN
+555|SDP could not perform necessary tasks to swap MSISDN
+556|Global first time user is true
+557|Subscriber has pending launch log entries
+558|Subscriber has scheduled events
+559|Subscriber has active time based bundle
+560|Could not reset PDP for MSISDN
+561|Destination MSISDN already exists
+562|MSISDN has already been swapped successfully
+563|MSISDN can not be swapped as it has a loan
+564|MSISDN can not be swapped as it is opted in for Data Share
+601|Service not configured for subtype
+600|Unknown error occurred during profiling
+602|User grey listed
+603|User black listed
+605|Database configuration error
+606|MSISDN not active (MSISDN in a loaded state)
+609|User RICA Barred
+610|Could not map voucher type to service option
+611|SDP Not used
+612|SDP Not used
+613|SDP Not used
+614|SDP Max number of FaF indicators exceeded
+615|SDP FaF indicator already present
+616|SDP Sub-DA does not exist
+617|SDP Crop of sub-DA not allowed
+618|SDP Invalid offer
+619|SDP Multi user identification offer sequence overflow
+620|SDP Service execution failed
+621|SDP Accumulator overflow
+622|SDP Accumulator underflow
+623|SDP Dedicated account not defined
+624|SDP Usage accumulator not defined
+625|SDP Invalid service class
+626|SDP Invalid old service class
+627|SDP Invalid new service class
+628|SDP Invalid old language
+629|SDP Invalid new language
+630|SDP No update values provided
+631|SDP Invalid old service expiry date
+632|SDP Invalid old airtime expiry date
+633|SDP New service period too long
+634|SDP New airtime period too long
+635|SDP Temporary blocking applied
+636|SDP Invalid old promotion plan
+638|SDP Invalid old service class expiry date
+639|SDP Invalid language
+640|SDP Subscriber already installed
+641|SDP Invalid master subscriber
+642|SDP Subscriber already activated
+643|SDP Already (linked) subordinate
+644|SDP Failed to disconnect
+645|SDP Unblocking of expired account attempted
+646|SDP Already (linked) master
+647|SDP Account not activated
+648|SDP Balance inquiry not Allowed
+649|SDP Subscriber already installed but marked for deletion
+650|SDP Timeout in SDP
+651|SDP Not allowed combination of blocks
+652|SDP Feature not activated
+653|SDP Invalid amount
+654|SDP Action not allowed
+655|SDP Dedicated account already activated
+656|SDP Invalid accumulator reset date
+657|SDP Invalid dedicated account expiry date
+658|SDP Usage threshold not defined
+659|SDP Usage counter not defined
+660|SDP Wrong usage value type supplied
+661|SDP Dedicated account in use
+662|SDP Usage counter value out of bounds
+663|SDP No subordinate subscribers connected to account
+664|SDP Maximum number of subscribers exceeded
+665|SDP PAM service already exists
+666|SDP Invalid PAM service id
+667|SDP Promotion plan allocation not found
+668|SDP Invalid promotion plan
+669|SDP Invalid promotion plan end date
+670|SDP Not used
+671|SDP Invalid old community list
+672|SDP Invalid ncew community list
+673|SDP FaF number does not exist in list
+674|SDP Invalid PIN code
+675|SDP FaF number not allowed
+676|SDP Invalid account home region
+677|SDP Charged FaF administration not allowed for SC
+678|SDP FaF number already exists
+679|SDP Offer not found
+680|SDP Invalid new offer date
+681|SDP Invalid old offer date
+682|SDP Offer already activated
+683|SDP Invalid old PAM class
+684|No wallets
+685|SDP Invalid old schedule
+686|SDP Invalid schedule
+687|SDP Invalid deferred to date
+688|SDP PAM evaluation failed
+689|SDP PAM Service sequence overflow
+690|SDP Invalid PAM period
+691|SDP PAM Class does not exist
+692|SDP Schedule does not exist
+693|SDP Invalid PAM indicator
+694|SDP Invalid offer expiry date
+695|SDP Wrong usage value type supplied
+696|SDP Usage threshold on personal level not found
+697|SDP Invalid unit type for dedicated account
+698|SDP Too many dedicated accounts
+699|Unknown SDP error
+701|Wallet does not exist
+702|Invalid wallet expiry date
+703|Insufficient funds
+705|Postilion transaction has already been registered
+706|Cannot cancel price plan
+707|Invalid Service Option Configuration
+708|Invalid Account Configuration
+709|Invalid wallet configuration
+710|Wallet not active
+711|SDP Invalid start PAM period indicator
+712|SDP Invalid expiry PAM period indicator
+713|SDP Not allowed to convert to other type of lifetime
+714|SDP Not used
+715|SDP Not allowed to delete PAM Service ID in use
+716|SDP First IVR call already done
+717|SDP Invalid PAM service priority
+718|SDP Not allowed to connect the PAM Class to the PAM Service
+719|SDP Invalid old PAM service priority
+720|SDP PAM service priority in use
+721|SDP Not allowed to add provider ID
+722|SDP Provider ID is missing
+723|SDP Associated party ID is missing
+724|SDP Associated party ID not allowed
+725|SDP Personal usage threshold not allowed
+726|SDP Usage threshold on common level not found
+727|SDP Product not found
+728|SDP Restriction time not found
+729|SDP Restriction times are not matching
+730|SDP Time zone not found
+731|SDP Offer type not allowed on subordinate subscriber
+732|SDP Communication ID update failed; change pending
+733|SDP Communication ID update failed; retry
+734|SDP Invalid product ID
+735|SDP Not allowed for subordinate
+736|SDP Discount not defined
+737|SDP End of provisioning is set
+738|SDP Invalid attribute
+739|SDP Invalid attribute value
+740|SDP Attribute value already exists
+741|SDP Invalid attribute action
+742|SDP Attribute not overridable
+743|SDP invalid PAM Class
+744|SDP Capability not available
+745|SDP Permission Denied
+746|SDP Operation not allowed on subscriber marked for rerating
+747|SDP Local provider ID does not exist
+748 -|SDP reserved error codes
+749|
+750|Service Option already provisioned
+751|Only one pending provision action allowed
+752|Service Option incompatible with existing service options in the subscriber profile
+753|Invalid input – e.g. attempting to purchase a recurring option for a hybrid MSISDN through the self-service channel
+754|Service Option not available – e.g. migration to a price plan when the MSISDN is already on the price plan, performing a sim swap set when the service option is not transferable or channel exclusion rules
+755|Exclusions present – this service option cannot be provisioned together with existing service options 
+|Parent service option not found
+756|Undefined Service Option 
+|Cancellation of a Service Option that has not been assigned to the MSISDN
+757|Pending Service Option Provisioning
+758|Date migration not allowed
+759|Expiry of service option not allowed
+760|Service option in status "Loaded" cannot be re-provisioned
+761|Cannot activate the service option without loading the service option
+762|Cannot activate a second instance of the service option
+763|Service Option not available to a child MSISDN
+764|Child MSISDN not allowed to request a change of billing method
+765|OOBAR present
+766|Service Option expired and default price plan provisioning not allowed
+770|Data Bundle CAP restrictions present
+780|The recharge cardtype does not exist
+781|The subscriber type cannot recharge the specified cardtype
+783|INVALID_BENEFITS_SPECIFIED (recharge and get project where variable benefits are required)
+784|Configured provision limit reached on this type of bundle - bundle provisioning not allowed
+785|A Variable benefit is required for the service option to be provisioned. The variable benefit was not supplied.
+786|CHILD_INCOMPATIBLE  Exclusion : the service option may not be provisioned on the existing price plan
+790|Maximum beneficiaries exceeded for DataShare/MultiShare
+791|Beneficiary already linked for DataShare/MultiShare
+792|DataShare/MultiShare group action not allowed
+793|MSISDN could not be de-linked because it was never linked (DataShare and MultiShare)
+795|Invalid SDP Offer Benefit Configuration
+796|Offer attribute not found
+801|Provisioning request pending (Provisioning request committed on previous call)
+802|Provisioning request pending – returned on a direct provision request (invocation of the TPROVISION service)
+803|Provision request committed (on this call)
+804|Attempted to migrate when exclusions are present
+805|Migration pending / Migration request committed
+806|Scheduled migration pending
+807|Insufficient funds to complete price plan migration
+808|Attempt to do price plan migration for the second time in one day (when only one free price plan migration per day is allowed)
+810|Subscriber is already using the billing method specified as the new billing method
+823|Subscriber Type migration pending
+825|Subscriber is already provisioned with subscriber type as specified in the migration target type in a subscriber migration error.
+830|Contract subscriber is not provisioned for self-service
+831|Subscriber is on a corporate APN
+840|Attempting to create a CUG for a community ID that already exists
+841|Attempting to create a CUG with an owner MSISDN that's already in use
+842|Missing/Incorrect parameters for CUG request
+843|MSISDN already assigned to the requested community group
+844|MSISDN assigned to too many community groups (max 3 groups)
+845|MSISDN not assigned to the requested community group
+846|CUG group does not exist
+847|CUG barring and unbarring not supported yet
+848|CUG suspended
+849|CUG Group has subscribers therefore cannot be deleted
+853|Invalid Content Id
+856|NOMMS – Subscriber cannot send/receive MMS
+857|RCVMMS – Subscriber cannot send but only.
+865|NOMTEVE – Barred from live chargeable content
+866|NOMTSUB – Barred from subscription chargeable content
+900|Transferor barred from using Me2U for Prepaid/Hybrid. Subscriber does not have service option for contract 
+|The MSISDN is not allowed to add a beneficiary to a Me2U list as the A_MSISDN is barred from using Me2U – e.g. prepaid/hybrid MSISDN with NOME2USEND active, contract MSISDN without an active Me2U service option, CPP or TPP MSISDN 
+|Hybrid MSISDN on one of the MyChoice TopUp price plans
+901|Transferor not active on IBS 
+|The MSISDN is not allowed to add a beneficiary to a Me2U list as the A_MSISDN is not active on IBS.
+902|Transferor Daily Limit Reached
+903|Transferor Monthly Limit Reached
+904|Subscriber has not reached minimum spend of twenty Rands (R20) to perform a Me2U transfer.
+910|Transferee barred from receiving transfers. 
+|The MSISDN is not allowed to add the B_MSISDN to its beneficiary list as the B_MSISDN is is a prepaid MSISDN with the NOME2URECV service option active.
+911|Transferee not a active prepaid or hybrid sub. Subscriber is either not active, a Community payphone, Taxi Payphone or Contract sub. 
+|The MSISDN is not allowed to add the B_MSISDN to its beneficiary list as the B_MSISDN is not an active hybrid/prepaid MSISDN, is a CPP or TPP MSISDN
+912|Transferee Daily Limit Reached
+913|Transferee Monthly Limit Reached
+914|Amount smaller than configured transfer minimum
+915|List capacity reached – i.e. list contains "MAX_ALLOWED"
+916|MSISDN does not exist in the beneficiary list (will be issued on a list removal operation with the B_MSISDN not in the list)
+917|Hybrid subscriber does not have a Me2Me spending limit configured
+918|Hybrid subscriber does have a Me2Me spending limit, but does not have balance left to complete the transfer
+919|A_MSISDN not a valid 1-4-1 subscriber when performing a loyalty transfer
+920|B_MSISDN not a valid 1-4-1 subscriber when performing a loyalty transfer
+921|A_MSISDN and B_MSISDN is the same on a loyalty transfer
+922|Me2U Transfer – denomination value not supported
+923|Error retrieving 1-4-1 balance information
+924|Error retrieving Me2Me wallet balance
+925|Could not retrieve balance on Me4U recharge
+950|Disconnection request committed
+951|Disconnection request committed on a previous transaction
+952|Subscriber type migration request committed for retry
+956|The schedule date entered is in the past
+957|Subscriber in question does not have the SO associated with the PRODUCT_CODE being provisioned (i.e. SO 1402,1403,1406)
+958|PRODUCT_CODE supplied does not exist on subscriber's profile
+1000|Invalid packet definition
+1010|This subscriber has a an outstanding loan; hence cannot be migrated to the ItsOn Price plan
+1011|This subscriber is not a prepaid; hence cannot be migrated to the ItsOn Price plan
+1012|ItsOn subscriber attempt to migrate for the second time in one day
+1013|APPLY_PRO_RATA attribute not supplied for recurring bundle/price plan on Variable Provisioning
+1014|CYCLES attribute not supplied for price plan on Variable Provisioning
+1015|RATE_PLAN attribute not supplied for price plan action on Variable Provisioning
+1016|VALIDITY attribute not supplied for price plan on Variable Provisioning
+1017|VALIDITY_UOM attribute not supplied for price plan on Variable Provisioning
+1018|Incorrect Bearer sent or Bearer sent in is not part of Variable SO on Variable Provisioning
+1019|Incorrect Validity UOM sent in on Variable Provisioning
+1020|APPLY_PRO_RATA cannot be T if VALIDITY_UOM is not Bill_Cycles on Variable Provisioning
+1021|INVALID_PRICE : Invalid external catalog price specified. The price in the request does not match the price in the catalog.
+1022|PRODUCT_CODE_LENGTH : The Product code length allowed is only 30 characters
+1023|INVALID_CAT_DESCRIPTION : The cat offer_description contains invalid characters
+1030|List of Services : DENOMINATION_UOM value specified of: <DENOMINATION_UOM> does not match the UOM of the SO_CAT_ID
+1031|List of Services : MIN_PRICE value supplied of <MIN_PRICE> is invalid
+1032|List of Services : MAX_PRICE value supplied of <MAX_PRICE> is invalid
+1033|List of Services : MIN_PRICE value supplied of <MIN_PRICE> is larger than MAX_PRICE value of <MAX_PRICE>
+1035|List of Services : MAX_DENOMINATION value supplied of <MAX_DENOMINATION> is invalid
+1036|List of Services : MIN_ DENOMINATION value supplied of <MIN_ DENOMINATION> is larger than MAX_ DENOMINATION value of MAX_ DENOMINATION
+1037|List of Services : DENOMINATION_UOM value supplied <DENOMINATION_UOM> is invalid
+1038|List of Services : DENOMINATION_UOM value supplied of <DENOMINATION_UOM> is not in the valid range
+1039|List of Services : Not Filtering by Recurring but RECURRING_PERIOD is supplied with value of <RECURRING_PERIOD>
+1040|List of Services : Not Filtering by Adhoc but ADHOC_PERIOD is supplied with value of <ADHOC_PERIOD>
+1041|List of Services : RECURRING_PERIOD value supplied of <RECURRING_PERIOD> is invalid
+1042|List of Services : ADDHOC_PERIOD value supplied <ADHOC_PERIOD> is invalid
+1045|List of Services : MIN_DENOMINATION value supplied of <MIN_DENOMINATION> is invalid
+100|Voucher locked – Recharge transaction still in progress
+400|Bad request
+405|Request not allowed
+409|Voucher PIN already loaded by the same subscriber
+417|The MSISDN is barred from using the recharge service
+419|VS cannot identify an SDP that services the specific MSISDN range
+453|Invalid voucher; Voucher expired; Locked by another user; Already loaded by another subscriber
+454|Invalid recharge amount specified
+500|Internal server error
+503|Service unavailable
+770|Data CAP exceeded
+906|Invalid MEXU_LIMIT value. The value is a percentage, so it should be an integer in range [0-100]
+907|Invalid provisioning channel for SO488-MeXU Variable Barring from SUL. Only SORB1 and Provident supported.
