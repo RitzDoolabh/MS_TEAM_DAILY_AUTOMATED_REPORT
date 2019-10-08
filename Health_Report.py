@@ -10,6 +10,7 @@ from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from pathlib import Path
+from datetime import datetime
 
 # @ todo:make sure that 021 works with 1 or 2 rows - check num rows
 path = Path(__file__).parent.absolute()
@@ -76,7 +77,7 @@ encoders.encode_base64(part)
 # Add header as key/value pair to attachment part
 part.add_header(
  "Content-Disposition",
- f"attachment; filename= {report.presentation_name}",
+ f"attachment; filename= {'IBF_AUTOMATED_REPORT_' + str(datetime.now())}",
 )
 
 # Add attachment to message and convert message to string
