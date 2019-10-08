@@ -1,3 +1,4 @@
+import plotly.io as pio
 import os
 import cx_Oracle
 import numpy as np
@@ -8,7 +9,7 @@ from datetime import timedelta
 import plotly.graph_objects as go
 import pandas as pd
 from IPython.display import Image
-from pd2ppt import df_to_powerpoint
+#from pd2ppt import df_to_powerpoint
 from pptx import Presentation
 from pptx.util import Inches
 from pd2ppt import df_to_table
@@ -19,7 +20,12 @@ import pandas as pd
 import numpy as np
 from datetime import date
 import calendar
-
+pio.orca.config.use_xvfb = False
+# pio.orca.config.use_xvfb = True
+# import plotly
+# plotly.io.orca.config.executable = '/usr/bin/orca'
+# plotly.io.orca.config.save()
+# pio.orca.config.save()
 
 
 class DBQuery(object):
@@ -33,7 +39,8 @@ class DBQuery(object):
         self.query_values = []
         self.presentation_name = presentation_name
         prs = Presentation(self.presentation_name)
-        new_name = 'Reports/IBF_AUTOMATED_REPORT' + str(datetime.now()) + '.pptx'
+        new_name = 'Reports/IBF_AUTOMATED_REPORT' + \
+            str(datetime.now()) + '.pptx'
         prs.save(new_name)
         self.presentation_name = new_name
 
@@ -48,7 +55,6 @@ class DBQuery(object):
         txBox = slide.shapes.add_textbox(t_left, t_top, t_width, t_height)
         tf = txBox.text_frame
         tf.clear()
-
 
         p = tf.paragraphs[0]
         run = p.add_run()
@@ -76,7 +82,8 @@ class DBQuery(object):
 
         self.query_list.append("IBS_KPI_020")
         dsn_tns = cx_Oracle.makedsn('10.206.11.82', '1521', sid='ibsdb1')
-        conn = cx_Oracle.connect(user='mngd_svc', password='mngd_svc_201909', dsn=dsn_tns)
+        conn = cx_Oracle.connect(
+            user='mngd_svc', password='mngd_svc_201909', dsn=dsn_tns)
 
         cursor = conn.cursor()
 
@@ -114,7 +121,6 @@ class DBQuery(object):
 
         gauges.create_full_image(name='ibs_kpi_020')
 
-
         # Put it in the presentation
         prs = Presentation(self.presentation_name)
         slide = prs.slides[7]
@@ -122,7 +128,7 @@ class DBQuery(object):
         number_of_guages = gauges.count
         if gauges.count >= 10:
             picture = slide.shapes.add_picture('Images/ibs_kpi_020.jpg', left=Inches(0.7204724), top=Inches(1.775590551),
-                                           width=Inches(6.732283), height=Inches(5.03937))
+                                               width=Inches(6.732283), height=Inches(5.03937))
         elif gauges.columns < 10:
             picture = slide.shapes.add_picture('Images/ibs_kpi_020.jpg', left=Inches(1.2),
                                                top=Inches(1.775590551),
@@ -132,24 +138,26 @@ class DBQuery(object):
 
         # This is the population of the explanations
         dsn_tns = cx_Oracle.makedsn('10.206.11.82', '1521', sid='ibsdb1')
-        conn = cx_Oracle.connect(user='mngd_svc', password='mngd_svc_201909', dsn=dsn_tns)
+        conn = cx_Oracle.connect(
+            user='mngd_svc', password='mngd_svc_201909', dsn=dsn_tns)
 
         cursor = conn.cursor()
         count = 0
+        message = ""
         for index, row in query_result_df.iterrows():
             top_margin = Inches(2.2 + (0.9 * count))
             try:
                 query_string = """
-                SELECT FAILED_SVC, DESCRIPTION, ROUND(COUNT( DISTINCT MSISDN)) averagefailures FROM
+                SELECT FAILED_ERR, DESCRIPTION, ROUND(COUNT( DISTINCT MSISDN)) averagefailures FROM
                 (
-                SELECT FAILED_SVC, SEVERITY, DESCRIPTION, MSISDN
+                SELECT FAILED_SVC, FAILED_ERR, SEVERITY, DESCRIPTION, MSISDN
                 FROM MTNIBS_V2.BP_EXCEPTIONS
                 where trunc(svc_req_time) >= trunc(sysdate)-1 and trunc(svc_req_time) < trunc(sysdate)
                 AND FAILED_SVC = '""" + row[0] + """'
-                
+
                 )
-                GROUP BY FAILED_SVC, DESCRIPTION
-                ORDER BY averagefailures desc
+                GROUP BY FAILED_SVC, DESCRIPTION, FAILED_ERR
+                ORDER BY averagefailures desc  
                         """
                 cursor.execute(query_string)
 
@@ -162,22 +170,31 @@ class DBQuery(object):
             query_result_df = pd.DataFrame(query_result)
             # @todo: pass this to a function to create the list and populate the presentation
 
-            if row[1] > 500:
-                populate_list(slide, query_result_df, prs, self.presentation_name, row[0], top_margin)
+            if count == 0 or count == 1:
+                populate_list(slide, query_result_df, prs,
+                              self.presentation_name, row[0], top_margin)
 
             print("Errors for :" + row[0])
             print(query_result_df)
+
+            query_result_df.columns = [
+                'ERROR No.', 'DESCRIPTION', 'AFFECTED SUBS.']
+            message = message + "<br> Errors for: " + row[0] + "<br> "
+            message = message + \
+                query_result_df.to_html(index=False) + "<br>" + "<br>"
             count = count + 1
         self.query_values.append(query_result)
 
         cursor.close()
         conn.close()
+        return message
 
     def ibs_kpi_021(self):
 
         self.query_list.append("IBS_KPI_021")
         dsn_tns = cx_Oracle.makedsn('10.206.11.82', '1521', sid='ibsdb1')
-        conn = cx_Oracle.connect(user='mngd_svc', password='mngd_svc_201909', dsn=dsn_tns)
+        conn = cx_Oracle.connect(
+            user='mngd_svc', password='mngd_svc_201909', dsn=dsn_tns)
 
         cursor = conn.cursor()
 
@@ -187,7 +204,7 @@ class DBQuery(object):
             (
             SELECT SEVERITY, ROUND(COUNT( DISTINCT MSISDN)) averagefailures
             FROM MTNIBS_V2.BP_EXCEPTIONS
-            WHERE SVC_REQ_TIME > SYSDATE-1 
+            WHERE SVC_REQ_TIME > SYSDATE-1
             GROUP BY SEVERITY
             ORDER BY SEVERITY)
             WHERE averagefailures > 0
@@ -222,17 +239,19 @@ class DBQuery(object):
         number_of_guages = gauges.count
 
         picture = slide.shapes.add_picture('Images/ibs_kpi_020.jpg', left=Inches(1.2),
-                                               top=Inches(1.775590551),
-                                               width=Inches(5.15748), height=Inches(1.6*gauges.rows))
+                                           top=Inches(1.775590551),
+                                           width=Inches(5.15748), height=Inches(1.6*gauges.rows))
 
         prs.save(self.presentation_name)
 
-        #This is the population of the explanations
+        # This is the population of the explanations
         dsn_tns = cx_Oracle.makedsn('10.206.11.82', '1521', sid='ibsdb1')
-        conn = cx_Oracle.connect(user='mngd_svc', password='mngd_svc_201909', dsn=dsn_tns)
+        conn = cx_Oracle.connect(
+            user='mngd_svc', password='mngd_svc_201909', dsn=dsn_tns)
 
         cursor = conn.cursor()
         count = 0
+        message = ""
         for index, row in query_result_df.iterrows():
             # @todo: Create evaluation function to decide when i should put which rows
             top_margin = Inches(2.2 + (0.9 * count))
@@ -242,9 +261,9 @@ class DBQuery(object):
                 (
                 SELECT FAILED_ERR, SEVERITY, DESCRIPTION, MSISDN
                 FROM MTNIBS_V2.BP_EXCEPTIONS
-                WHERE SVC_REQ_TIME > SYSDATE-1 
+                WHERE SVC_REQ_TIME > SYSDATE-1
                 AND SEVERITY = '""" + row[0] + """'
-                
+
                 )
                 GROUP BY FAILED_ERR, DESCRIPTION
                 ORDER BY averagefailures desc
@@ -261,10 +280,17 @@ class DBQuery(object):
             # @todo: pass this to a function to create the list and populate the presentation
 
             if row[1] > 50:
-                populate_list(slide, query_result_df, prs, self.presentation_name, row[0], top_margin)
+                populate_list(slide, query_result_df, prs,
+                              self.presentation_name, row[0], top_margin)
 
             print("Errors for: " + row[0])
             print(query_result_df)
+
+            query_result_df.columns = [
+                'ERROR No.', 'DESCRIPTION', 'AFFECTED SUBS.']
+            message = message + "<br> Errors for: " + row[0] + "<br> "
+            message = message + \
+                query_result_df.to_html(index=False) + "<br>" + "<br>"
             count = count + 1
         self.query_values.append(query_result)
 
@@ -272,12 +298,14 @@ class DBQuery(object):
         conn.close()
 
         query_result_df = pd.DataFrame(query_result)
+        return message
 
     def ibs_ms_001(self):
 
         self.query_list.append("IBS_MS_001")
         dsn_tns = cx_Oracle.makedsn('10.206.11.82', '1521', sid='ibsdb1')
-        conn = cx_Oracle.connect(user='mngd_svc', password='mngd_svc_201909', dsn=dsn_tns)
+        conn = cx_Oracle.connect(
+            user='mngd_svc', password='mngd_svc_201909', dsn=dsn_tns)
 
         cursor = conn.cursor()
         my_date = date.today()
@@ -289,22 +317,23 @@ class DBQuery(object):
         # @todo: what to do if it's the end of day query?
         if now == 'Monday':
             dateDiff = 3
-        begin_date_time = (now - timedelta(days=dateDiff)).strftime("%Y/%m/%d, %H:%M:%S")
+        begin_date_time = (now - timedelta(days=dateDiff)
+                           ).strftime("%Y/%m/%d, %H:%M:%S")
         end_date_time = now.strftime("%Y/%m/%d, %H:%M:%S")
         try:
             query_string = """
             SELECT * FROM
             (
-            select svcname, failed_svc, description, count(*) CNT1, count(distinct msisdn) affected_subscribers, CASE 
+            select svcname, failed_svc, description, count(*) CNT1, count(distinct msisdn) affected_subscribers, CASE
                 WHEN svcname <> ''
                 THEN ''
                 ELSE ''
             END COMMENTS
             from mtnibs_v2.bp_exceptions
-            where (svc_req_time) between TO_DATE( '""" + str(begin_date_time) + """', 'YYYY/MM/DD HH24:MI:SS') and 
+            where (svc_req_time) between TO_DATE( '""" + str(begin_date_time) + """', 'YYYY/MM/DD HH24:MI:SS') and
             TO_DATE('""" + str(end_date_time) + """', 'YYYY/MM/DD HH24:MI:SS')
             and severity in ('FATAL','FAILED')
-            group by svcname, failed_svc, description 
+            group by svcname, failed_svc, description
             order by svcname, failed_svc, description
             )
             WHERE ROWNUM <= 1000 ORDER BY CNT1 DESC
@@ -322,29 +351,41 @@ class DBQuery(object):
         cursor.close()
         conn.close()
 
-
         query_result_df = pd.DataFrame(query_result)
         query_result_df2 = query_result_df.transpose()
-        query_result_df.columns =['Service Name', 'Failed Component Service', 'Error', 'Failure Count', 'Affected Subscribers', 'Comments']
-        fig = go.Figure(data=[go.Table(header=dict(values=['A Scores', 'B Scores', 'C', 'D', 'E', 'F']),
-                                       cells=dict(values=query_result_df2))])
+        query_result_df.columns = ['Service Name', 'Failed Component Service',
+                                   'Error', 'Failure Count', 'Affected Subscribers', 'Comments']
+        # fig = go.Figure(data=[go.Table(header=dict(values=['A Scores', 'B Scores', 'C', 'D', 'E', 'F']),
+        #                                cells=dict(values=query_result_df2))])
 
         prs = Presentation(self.presentation_name)
         slide = prs.slides[5]
+        now = datetime.now()
+
+        dt_string = now.strftime("%d/%m/%Y %H:%M")
+        text = 'Period: ' + str(dt_string) + ' - ' + str((now - timedelta(days=dateDiff)).strftime("%%d/%m/%Y %H:%M"))
+        txBox = slide.shapes.add_textbox(Inches(0.9), Inches(1.0), Inches(1.0), Inches(1.0))
+        tf = txBox.text_frame
+        tf.clear()
+
+        p = tf.paragraphs[0]
+        run = p.add_run()
+        run.text = text
+        run.font.size = Pt(12)
         top = Inches(2.5)
         left = Inches(0.75)
         width = Inches(9.25)
         height = Inches(5.0)
         shapes = slide.shapes
 
-        tableObj = df_to_table(slide=slide, df=query_result_df, left=left, top=top, width=width, name='ibs_kpi_001', height=1)
+        tableObj = df_to_table(slide=slide, df=query_result_df, left=left,
+                               top=top, width=width, name='ibs_kpi_001', height=1)
         table = tableObj.table
 
         for cell in iter_cells(table):
             for paragraph in cell.text_frame.paragraphs:
                 for run in paragraph.runs:
                     run.font.size = Pt(7)
-
 
         for cell in iter_header(table):
             for paragraph in cell.text_frame.paragraphs:
@@ -361,22 +402,22 @@ class DBQuery(object):
 
         prs.save(self.presentation_name)
 
-
     def ibs_ms_003(self):
 
         self.query_list.append("IBS_MS_003")
         dsn_tns = cx_Oracle.makedsn('10.211.11.78', '1521', sid='mcldb')
-        conn = cx_Oracle.connect(user='ibs_sla', password='ibs_sla', dsn=dsn_tns)
+        conn = cx_Oracle.connect(
+            user='ibs_sla', password='ibs_sla', dsn=dsn_tns)
 
         cursor = conn.cursor()
 
         try:
-            query_string = """select a.*, 
-                                CASE 
+            query_string = """select a.*,
+                                CASE
                                     WHEN severity <> ''
                                     THEN ''
                                     ELSE ''
-                                END COMMENTS  
+                                END COMMENTS
                                 from BP_EXCEPTION_STATS_VIEW a
                                 where severity = 'RETRY'
                                 order by severity
@@ -405,8 +446,9 @@ class DBQuery(object):
         z = query_result_df.iloc[:, 4]
         zname = 'Unique MSISDNs Affected (Today)'
 
-        df = pd.DataFrame({xname: x.as_matrix(), yname: y.as_matrix(), zname: z.as_matrix()}, index=services)
-        ax = df.plot.barh(figsize=(10,6))
+        df = pd.DataFrame({xname: x.as_matrix(), yname: y.as_matrix(
+        ), zname: z.as_matrix()}, index=services)
+        ax = df.plot.barh(figsize=(10, 6))
         fig = ax.get_figure()
         fig.savefig('Images/ibs_ms_003.png', transparent=True)
 
@@ -428,7 +470,8 @@ class DBQuery(object):
                                    'Total Invocations Today', 'Retry % 2 Days Ago', 'Retry % 1 Day Ago',
                                    'Retry % Today', 'Comments']
 
-        tableObj = df_to_table(slide=slide, df=query_result_df, left=left, top=top, width=width, name='ibs_kpi_003')
+        tableObj = df_to_table(slide=slide, df=query_result_df,
+                               left=left, top=top, width=width, name='ibs_kpi_003')
         table = tableObj.table
 
         for cell in iter_cells(table):
@@ -453,7 +496,7 @@ class DBQuery(object):
         table.columns[8].width = Inches(1.0)
         table.columns[9].width = Inches(1.0)
         table.columns[10].width = Inches(1.0)
-        table.columns[11].width = Inches(1.5)
+        table.columns[11].width = Inches(0.9)
         prs.save(self.presentation_name)
 
 
@@ -462,19 +505,21 @@ def iter_cells(table):
         for cell in row.cells:
             yield cell
 
+
 def iter_header(table):
     row = table.rows[0]
     for cell in row.cells:
         yield cell
 
+
 def populate_list(slide, query_result_df, prs, name, severity, top):
     # Text position
-    t_left = Inches(9)
+    t_left = Inches(8.5)
     t_top = top
     t_width = Inches(4)
     t_height = Inches(0.7440945)
     # Text
-    txBox = slide.shapes.add_textbox(t_left,t_top, t_width, t_height)
+    txBox = slide.shapes.add_textbox(t_left, t_top, t_width, t_height)
     tf = txBox.text_frame
     tf.clear()
 
@@ -492,6 +537,12 @@ def populate_list(slide, query_result_df, prs, name, severity, top):
     p.font.size = Pt(9)
     p = tf.add_paragraph()
     p.level = 0
-    p.text = "     Error " + query_result_df[0][0] + ": " + " To be populated"
+    data = pd.read_csv("Presentation/Errors.csv", sep='|')
+
+    try:
+        err_description = data[data.ERROR == str(query_result_df[0][0])].iloc[0][1]
+    except:
+        err_description = '-'
+    p.text = "     Error " + query_result_df[0][0] + ": " + str(err_description)
     p.font.size = Pt(9)
     prs.save(name)
