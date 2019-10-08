@@ -28,7 +28,7 @@ class Create_Gauge(object):
             max_count
     ):
         
-        self.path = str(Path(__file__).parent.absolute() + '/')
+        self.path = str(Path(__file__).parent.absolute()) + '/'
         self.max_count = max_count
         self.count = 0
         self.columns = 0

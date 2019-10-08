@@ -27,7 +27,7 @@ class GaugeChart(object):
 
     ):
 
-        self.path = str(Path(__file__).parent.absolute() + '/')
+        self.path = str(Path(__file__).parent.absolute()) + '/'
         self.presentation = self.presentation
         self.df_list = self.df_list
         self.name = self.name

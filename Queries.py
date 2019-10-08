@@ -38,7 +38,7 @@ class DBQuery(object):
 
         self.query_list = []
         self.query_values = []
-        self.path = str(Path(__file__).parent.absolute() + '/')
+        self.path = str(Path(__file__).parent.absolute()) + '/'
         self.presentation_name = presentation_name
         prs = Presentation(self.presentation_name)
         new_name = self.path + 'Reports/IBF_AUTOMATED_REPORT' + \
