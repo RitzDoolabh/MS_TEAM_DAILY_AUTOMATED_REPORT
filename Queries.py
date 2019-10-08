@@ -174,7 +174,7 @@ class DBQuery(object):
             # @todo: pass this to a function to create the list and populate the presentation
 
             if count == 0 or count == 1:
-                populate_list(slide, query_result_df, prs,
+                populate_list(self, slide, query_result_df, prs,
                               self.presentation_name, row[0], top_margin)
 
             print("Errors for :" + row[0])
@@ -283,7 +283,7 @@ class DBQuery(object):
             # @todo: pass this to a function to create the list and populate the presentation
 
             if row[1] > 50:
-                populate_list(slide, query_result_df, prs,
+                populate_list(self, slide, query_result_df, prs,
                               self.presentation_name, row[0], top_margin)
 
             print("Errors for: " + row[0])
@@ -515,7 +515,7 @@ def iter_header(table):
         yield cell
 
 
-def populate_list(slide, query_result_df, prs, name, severity, top):
+def populate_list(self, slide, query_result_df, prs, name, severity, top):
     # Text position
     t_left = Inches(8.5)
     t_top = top
@@ -540,7 +540,7 @@ def populate_list(slide, query_result_df, prs, name, severity, top):
     p.font.size = Pt(9)
     p = tf.add_paragraph()
     p.level = 0
-    data = pd.read_csv("Presentation/Errors.csv", sep='|')
+    data = pd.read_csv(self.path + "Presentation/Errors.csv", sep='|')
 
     try:
         err_description = data[data.ERROR == str(query_result_df[0][0])].iloc[0][1]
