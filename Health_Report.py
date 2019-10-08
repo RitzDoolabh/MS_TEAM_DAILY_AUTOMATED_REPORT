@@ -46,11 +46,11 @@ message["To"] = receiver_email
 
 # Create the plain-text and HTML version of your message
 text = """\
-Hi,
+Hi, \n
 
-MS_Team Daily Report Tests
+MS_Team Daily Report \n \n
 """
-html = text + msg + msg2
+html = msg + msg2
 
 # Turn these into plain/html MIMEText objects
 part1 = MIMEText(text, "plain")
