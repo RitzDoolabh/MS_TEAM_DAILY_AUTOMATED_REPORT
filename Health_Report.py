@@ -9,9 +9,11 @@ from email import encoders
 from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-# @ todo:make sure that 021 works with 1 or 2 rows - check num rows
+from pathlib import Path
 
-report = DBQuery('Presentation/IBF_AUTOMATED_MS_Report.pptx')
+# @ todo:make sure that 021 works with 1 or 2 rows - check num rows
+path = Path(__file__).parent.absolute()
+report = DBQuery(str(path) + '/Presentation/IBF_AUTOMATED_MS_Report.pptx')
 msg = ""
 msg2 = ""
 msg2 = msg2 + report.ibs_kpi_020() # done

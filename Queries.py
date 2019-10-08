@@ -20,12 +20,13 @@ import pandas as pd
 import numpy as np
 from datetime import date
 import calendar
-pio.orca.config.use_xvfb = False
-# pio.orca.config.use_xvfb = True
-# import plotly
-# plotly.io.orca.config.executable = '/usr/bin/orca'
-# plotly.io.orca.config.save()
-# pio.orca.config.save()
+from pathlib import Path
+# pio.orca.config.use_xvfb = False
+pio.orca.config.use_xvfb = True
+import plotly
+plotly.io.orca.config.executable = '/usr/bin/orca'
+plotly.io.orca.config.save()
+pio.orca.config.save()
 
 
 class DBQuery(object):
@@ -37,13 +38,15 @@ class DBQuery(object):
 
         self.query_list = []
         self.query_values = []
+        self.path = str(Path(__file__).parent.absolute() + '/')
         self.presentation_name = presentation_name
         prs = Presentation(self.presentation_name)
-        new_name = 'Reports/IBF_AUTOMATED_REPORT' + \
+        new_name = self.path + 'Reports/IBF_AUTOMATED_REPORT' + \
             str(datetime.now()) + '.pptx'
         prs.save(new_name)
         self.presentation_name = new_name
-
+        
+        
     def coverpage(self):
         t_left = Inches(8.5)
         t_top = Inches(1.3)
@@ -127,10 +130,10 @@ class DBQuery(object):
         shapes = prs.slides[0].shapes
         number_of_guages = gauges.count
         if gauges.count >= 10:
-            picture = slide.shapes.add_picture('Images/ibs_kpi_020.jpg', left=Inches(0.7204724), top=Inches(1.775590551),
+            picture = slide.shapes.add_picture(self.path + 'Images/ibs_kpi_020.jpg', left=Inches(0.7204724), top=Inches(1.775590551),
                                                width=Inches(6.732283), height=Inches(5.03937))
         elif gauges.columns < 10:
-            picture = slide.shapes.add_picture('Images/ibs_kpi_020.jpg', left=Inches(1.2),
+            picture = slide.shapes.add_picture(self.path + 'Images/ibs_kpi_020.jpg', left=Inches(1.2),
                                                top=Inches(1.775590551),
                                                width=Inches(5.15748), height=Inches(1.6*gauges.rows))
 
@@ -238,7 +241,7 @@ class DBQuery(object):
         shapes = prs.slides[0].shapes
         number_of_guages = gauges.count
 
-        picture = slide.shapes.add_picture('Images/ibs_kpi_020.jpg', left=Inches(1.2),
+        picture = slide.shapes.add_picture(self.path + 'Images/ibs_kpi_020.jpg', left=Inches(1.2),
                                            top=Inches(1.775590551),
                                            width=Inches(5.15748), height=Inches(1.6*gauges.rows))
 
@@ -450,7 +453,7 @@ class DBQuery(object):
         ), zname: z.as_matrix()}, index=services)
         ax = df.plot.barh(figsize=(10, 6))
         fig = ax.get_figure()
-        fig.savefig('Images/ibs_ms_003.png', transparent=True)
+        fig.savefig(self.path + 'Images/ibs_ms_003.png', transparent=True)
 
         prs = Presentation(self.presentation_name)
         slide = prs.slides[3]
@@ -459,7 +462,7 @@ class DBQuery(object):
         width = Inches(9.25)
         height = Inches(5.0)
         shapes = slide.shapes
-        picture = slide.shapes.add_picture('Images/ibs_ms_003.png', left=Inches(0.9),
+        picture = slide.shapes.add_picture(self.path + 'Images/ibs_ms_003.png', left=Inches(0.9),
                                            top=Inches(1.3),
                                            width=Inches(10.23), height=Inches(6.02))
         prs.save(self.presentation_name)

@@ -14,6 +14,7 @@ from pptx.util import Inches
 from pd2ppt import df_to_table
 from pptx.util import Pt
 from plotly.subplots import make_subplots
+from pathlib import Path
 
 
 class GaugeChart(object):
@@ -26,6 +27,7 @@ class GaugeChart(object):
 
     ):
 
+        self.path = str(Path(__file__).parent.absolute() + '/')
         self.presentation = self.presentation
         self.df_list = self.df_list
         self.name = self.name
