@@ -21,13 +21,14 @@ import sys
 from PIL import Image
 import cv2
 
+
 class Create_Gauge(object):
 
     def __init__(
             self,
             max_count
     ):
-        
+
         self.path = str(Path(__file__).parent.absolute()) + '/'
         self.max_count = max_count
         self.count = 0
@@ -51,21 +52,20 @@ class Create_Gauge(object):
         colour1 = green
         colour2 = grey
 
-
-        ratio = guage_stat/max_count
-        ratio1 = ratio*75
-        ratio2 = 75-ratio1
+        ratio = guage_stat / max_count
+        ratio1 = ratio * 75
+        ratio2 = 75 - ratio1
 
         if (ratio < 0.01):
             ratio1 = 1
-            ratio2 = 75-ratio1
+            ratio2 = 75 - ratio1
 
         if ratio >= 0.65:
             colour1 = red
         elif 0.24 < ratio < 0.65:
             colour1 = orange
 
-        fig = make_subplots(rows=1, cols=1, specs=[[{'type':'domain'}]])
+        fig = make_subplots(rows=1, cols=1, specs=[[{'type': 'domain'}]])
         fig.add_trace(go.Pie(
             values=[25, ratio1, ratio2],
             domain={"x": [0, .48]},
@@ -82,7 +82,7 @@ class Create_Gauge(object):
             hoverinfo="none",
             sort=False
             # textinfo="label",
-            ), 1, 1)
+        ), 1, 1)
 
         fig.update_traces(textinfo='none')
 
@@ -95,8 +95,8 @@ class Create_Gauge(object):
             margin=dict(l=30, r=30, t=30, b=0),
         )
 
-        fig.write_image(self.path + 'Images/gauge' + str(self.count) +'.jpg', width=500, height=500,scale=0)
-        self.count = self.count+1
+        fig.write_image(self.path + 'Images/gauge' + str(self.count) + '.jpg', width=500, height=500, scale=0)
+        self.count = self.count + 1
 
     def create_full_image(self, name):
 
@@ -112,13 +112,13 @@ class Create_Gauge(object):
                 # there is only 1 image
                 self.create_gauge_rows(x, y, 1)
                 y = 2
-            x = x+1
+            x = x + 1
         elif 2 < self.count < 10:
             # if self.count > 9:
             while x < (self.count + 1):
                 if x % 3 == 0:
-                    #there are three images
-                    #take the first three images and put them together
+                    # there are three images
+                    # take the first three images and put them together
                     self.create_gauge_rows(x, y, 3)
                     y = y + 1
                 elif (self.count % 3 == 2) and (x > ((self.count // 3) * 3)):
@@ -130,7 +130,7 @@ class Create_Gauge(object):
                     self.create_gauge_rows(x, y, 1)
                     y = y + 1
                     break
-                x = x+1
+                x = x + 1
         else:
             while x < (self.count + 1):
                 if x % 4 == 0:
@@ -151,8 +151,8 @@ class Create_Gauge(object):
                 x = x + 1
         z = 0
         row_array = list()
-        while z < y-1:
-            row_array.append(cv2.imread(self.path + 'Images/row' + str(z+1) + '.jpg'))
+        while z < y - 1:
+            row_array.append(cv2.imread(self.path + 'Images/row' + str(z + 1) + '.jpg'))
             z = z + 1
         final = np.concatenate(row_array, axis=0)
         cv2.imwrite(self.path + 'Images/' + str(name) + '.jpg', final)
@@ -219,7 +219,8 @@ class Create_Gauge(object):
             img1 = np.zeros([500, 500, 3], dtype=np.uint8)
             img1.fill(255)
 
-        if (gauges_per_row == 4 or gauges_per_row == 3)and os.path.isfile(self.path + 'Images/gauge' + str(self.count - 3) + '.jpg'):
+        if (gauges_per_row == 4 or gauges_per_row == 3) and os.path.isfile(
+                self.path + 'Images/gauge' + str(self.count - 3) + '.jpg'):
             if gauges_per_row == 3:
                 img1 = cv2.imread(self.path + 'Images/gauge' + str(self.count - 3) + '.jpg')
             else:
@@ -229,7 +230,7 @@ class Create_Gauge(object):
         #     img2.fill(255)
 
         if (gauges_per_row == 4 or gauges_per_row == 3 or gauges_per_row == 2) and os.path.isfile(
-                'gauge' + str(num_gauges - 2) + '.jpg'):
+                self.path + 'Images/gauge' + str(self.count - 2) + '.jpg'):
             if gauges_per_row == 2:
                 img1 = cv2.imread(self.path + 'Images/gauge' + str(self.count - 2) + '.jpg')
             elif gauges_per_row == 3:
@@ -240,8 +241,9 @@ class Create_Gauge(object):
         #     img2 = np.zeros([500, 500, 3], dtype=np.uint8)
         #     img2.fill(255)
 
-        if (gauges_per_row == 4 or gauges_per_row == 3 or gauges_per_row == 2 or gauges_per_row == 1) and os.path.isfile(
-                'gauge' + str(num_gauges - 1) + '.jpg'):
+        if (
+                gauges_per_row == 4 or gauges_per_row == 3 or gauges_per_row == 2 or gauges_per_row == 1) and os.path.isfile(
+                self.path + 'Images/gauge' + str(self.count - 1) + '.jpg'):
             if gauges_per_row == 2:
                 img2 = cv2.imread(self.path + 'Images/gauge' + str(self.count - 1) + '.jpg')
                 img3 = np.zeros([500, 500, 3], dtype=np.uint8)
