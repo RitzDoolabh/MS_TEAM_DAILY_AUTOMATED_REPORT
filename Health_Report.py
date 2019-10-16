@@ -87,5 +87,5 @@ message.attach(part)
 text = message.as_string()
 
 server = smtplib.SMTP('10.10.10.1', 25)
-# server.sendmail("MS_REPORT@globetom.com", ["ritesh.doolabh@globetom.com","marne.meades@globetom.com","quintin.vorster@globetom.com","stephan.kruger@globetom.com"], message.as_string())
+#server.sendmail("IBF_MS_REPORT@globetom.com", ["ritesh.doolabh@globetom.com","marne.meades@globetom.com","quintin.vorster@globetom.com","stephan.kruger@globetom.com","ritzd93@gmail.com"], message.as_string())
 server.sendmail("IBF_MS_REPORT@globetom.com", ["ritesh.doolabh@globetom.com"], message.as_string())
