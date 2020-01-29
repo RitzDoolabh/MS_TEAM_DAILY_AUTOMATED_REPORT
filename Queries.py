@@ -86,7 +86,7 @@ class DBQuery(object):
         self.query_list.append("IBS_KPI_020")
         dsn_tns = cx_Oracle.makedsn('10.206.11.82', '1521', sid='ibsdb1')
         conn = cx_Oracle.connect(
-            user='mngd_svc', password='mngd_svc_201909', dsn=dsn_tns)
+            user='mngd_svc', password='mngd_svc_202001', dsn=dsn_tns)
 
         cursor = conn.cursor()
 
@@ -142,7 +142,7 @@ class DBQuery(object):
         # This is the population of the explanations
         dsn_tns = cx_Oracle.makedsn('10.206.11.82', '1521', sid='ibsdb1')
         conn = cx_Oracle.connect(
-            user='mngd_svc', password='mngd_svc_201909', dsn=dsn_tns)
+            user='mngd_svc', password='mngd_svc_202001', dsn=dsn_tns)
 
         cursor = conn.cursor()
         count = 0
@@ -197,7 +197,7 @@ class DBQuery(object):
         self.query_list.append("IBS_KPI_021")
         dsn_tns = cx_Oracle.makedsn('10.206.11.82', '1521', sid='ibsdb1')
         conn = cx_Oracle.connect(
-            user='mngd_svc', password='mngd_svc_201909', dsn=dsn_tns)
+            user='mngd_svc', password='mngd_svc_202001', dsn=dsn_tns)
 
         cursor = conn.cursor()
 
@@ -250,7 +250,7 @@ class DBQuery(object):
         # This is the population of the explanations
         dsn_tns = cx_Oracle.makedsn('10.206.11.82', '1521', sid='ibsdb1')
         conn = cx_Oracle.connect(
-            user='mngd_svc', password='mngd_svc_201909', dsn=dsn_tns)
+            user='mngd_svc', password='mngd_svc_202001', dsn=dsn_tns)
 
         cursor = conn.cursor()
         count = 0
@@ -308,7 +308,7 @@ class DBQuery(object):
         self.query_list.append("IBS_MS_001")
         dsn_tns = cx_Oracle.makedsn('10.206.11.82', '1521', sid='ibsdb1')
         conn = cx_Oracle.connect(
-            user='mngd_svc', password='mngd_svc_201909', dsn=dsn_tns)
+            user='mngd_svc', password='mngd_svc_202001', dsn=dsn_tns)
 
         cursor = conn.cursor()
         my_date = date.today()
