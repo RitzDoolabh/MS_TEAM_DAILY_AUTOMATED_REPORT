@@ -84,9 +84,9 @@ class DBQuery(object):
     def ibs_kpi_020(self):
 
         self.query_list.append("IBS_KPI_020")
-        dsn_tns = cx_Oracle.makedsn('10.206.11.82', '1521', sid='ibsdb1')
+        dsn_tns = cx_Oracle.makedsn('10.206.11.80', '1521', sid='ibsdb1')
         conn = cx_Oracle.connect(
-            user='mngd_svc', password='mngd_svc_202001', dsn=dsn_tns)
+            user='mngd_svc', password='mngd_svc_202004', dsn=dsn_tns)
 
         cursor = conn.cursor()
 
@@ -97,7 +97,7 @@ class DBQuery(object):
             select failed_svc, count(distinct(msisdn)) subsaffected
             from mtnibs_v2.bp_exceptions
             where trunc(svc_req_time) >= trunc(sysdate)-1 and trunc(svc_req_time) < trunc(sysdate)
-            and severity not in ('RETRY', 'WARNING', '-')
+            and severity = 'FATAL'
             group by failed_svc
             order by subsaffected desc
             )
@@ -140,9 +140,9 @@ class DBQuery(object):
         prs.save(self.presentation_name)
 
         # This is the population of the explanations
-        dsn_tns = cx_Oracle.makedsn('10.206.11.82', '1521', sid='ibsdb1')
+        dsn_tns = cx_Oracle.makedsn('10.206.11.80', '1521', sid='ibsdb1')
         conn = cx_Oracle.connect(
-            user='mngd_svc', password='mngd_svc_202001', dsn=dsn_tns)
+            user='mngd_svc', password='mngd_svc_202004', dsn=dsn_tns)
 
         cursor = conn.cursor()
         count = 0
@@ -195,9 +195,9 @@ class DBQuery(object):
     def ibs_kpi_021(self):
 
         self.query_list.append("IBS_KPI_021")
-        dsn_tns = cx_Oracle.makedsn('10.206.11.82', '1521', sid='ibsdb1')
+        dsn_tns = cx_Oracle.makedsn('10.206.11.80', '1521', sid='ibsdb1')
         conn = cx_Oracle.connect(
-            user='mngd_svc', password='mngd_svc_202001', dsn=dsn_tns)
+            user='mngd_svc', password='mngd_svc_202004', dsn=dsn_tns)
 
         cursor = conn.cursor()
 
@@ -248,9 +248,9 @@ class DBQuery(object):
         prs.save(self.presentation_name)
 
         # This is the population of the explanations
-        dsn_tns = cx_Oracle.makedsn('10.206.11.82', '1521', sid='ibsdb1')
+        dsn_tns = cx_Oracle.makedsn('10.206.11.80', '1521', sid='ibsdb1')
         conn = cx_Oracle.connect(
-            user='mngd_svc', password='mngd_svc_202001', dsn=dsn_tns)
+            user='mngd_svc', password='mngd_svc_202004', dsn=dsn_tns)
 
         cursor = conn.cursor()
         count = 0
@@ -306,9 +306,9 @@ class DBQuery(object):
     def ibs_ms_001(self):
 
         self.query_list.append("IBS_MS_001")
-        dsn_tns = cx_Oracle.makedsn('10.206.11.82', '1521', sid='ibsdb1')
+        dsn_tns = cx_Oracle.makedsn('10.206.11.80', '1521', sid='ibsdb1')
         conn = cx_Oracle.connect(
-            user='mngd_svc', password='mngd_svc_202001', dsn=dsn_tns)
+            user='mngd_svc', password='mngd_svc_202004', dsn=dsn_tns)
 
         cursor = conn.cursor()
         my_date = date.today()
@@ -536,7 +536,10 @@ def populate_list(self, slide, query_result_df, prs, name, severity, top):
     p.font.size = Pt(9)
     p = tf.add_paragraph()
     p.level = 0
-    p.text = "     " + query_result_df[0][0] + ": " + query_result_df[1][0]
+    try:    
+        p.text = "     " + str(query_result_df[0][0]) + ": " + str(query_result_df[1][0])
+    except:
+        print("Error")
     p.font.size = Pt(9)
     p = tf.add_paragraph()
     p.level = 0
@@ -546,6 +549,9 @@ def populate_list(self, slide, query_result_df, prs, name, severity, top):
         err_description = data[data.ERROR == str(query_result_df[0][0])].iloc[0][1]
     except:
         err_description = '-'
-    p.text = "     Error " + query_result_df[0][0] + ": " + str(err_description)
+    try:
+        p.text = "     Error " + query_result_df[0][0] + ": " + str(err_description)
+    except:
+        print("Error")
     p.font.size = Pt(9)
     prs.save(name)

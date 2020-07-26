@@ -64,10 +64,8 @@ message.attach(part2)
 
 
 
-# Open PDF file in binary mode
 with open(report.presentation_name, "rb") as attachment:
  # Add file as application/octet-stream
- # Email client can usually download this automatically as attachment
  part = MIMEBase("application", "octet-stream")
  part.set_payload(attachment.read())
 
@@ -79,7 +77,7 @@ now = datetime.now()
 dt_string = now.strftime("%d/%m/%Y_%H:%M")
 part.add_header(
  "Content-Disposition",
- f"attachment; filename= {'IBF_AUTOMATED_REPORT_' + str(dt_string) + '.pptx'}",
+ f"attachment; filename= {'IBF_DAILY_REPORT_' + str(dt_string) + '.pptx'}",
 )
 
 # Add attachment to message and convert message to string
@@ -88,4 +86,9 @@ text = message.as_string()
 
 server = smtplib.SMTP('10.10.10.1', 25)
 #server.sendmail("IBF_MS_REPORT@globetom.com", ["ritesh.doolabh@globetom.com","marne.meades@globetom.com","quintin.vorster@globetom.com","stephan.kruger@globetom.com","ritzd93@gmail.com"], message.as_string())
-server.sendmail("IBF_MS_REPORT@globetom.com", ["ritesh.doolabh@globetom.com"], message.as_string())
+#server.set_debuglevel(True)
+#server.sendmail("IBF_MS_REPORT@globetom.com", ["ritzd93@gmail.com"], message.as_string())
+
+#server.sendmail("IBF_MS_REPORT@globetom.com", ["ritzd93@gmail.com", "ritesh.doolabh@globetom.com"], message.as_string())
+server.sendmail("IBF_MS_REPORT@globetom.com", ["ibf-support@globetom.com","ritesh.doolabh@globetom.com"], message.as_string())
+
